@@ -60,6 +60,7 @@ export const FEATURED_VIDEOS: Record<string, Video[]> = {
     { id: "ebDzih1xOBk", topic: "Arco", title: "Como segurar o arco corretamente — exercícios e erros comuns" },
   ],
   viola: [
+    { id: "ZVYVO1EJFhM", topic: "Vibrato (inglês)", title: "Viola vibrato — tutorial e exercícios (em inglês)" },
     { id: "TY-bRbIN5D4", topic: "Arco", title: "Empunhadura do arco — como segurar o arco da viola" },
     { id: "8jJGz2Gl44w", topic: "Afinação (CCB)", title: "Viola de Arco CCB (Tenor) — afinação" },
   ],
