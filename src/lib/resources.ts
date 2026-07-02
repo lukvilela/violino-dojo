@@ -53,11 +53,25 @@ export interface Video {
   title: string;
 }
 
-// Vídeo-aulas embutidas em destaque (demonstração no violino; princípios valem p/ viola/cello).
-export const FEATURED_VIDEOS: Video[] = [
-  { id: "v0lIfsKCDQs", topic: "Vibrato", title: "O jeito certo de fazer o vibrato no violino" },
-  { id: "ebDzih1xOBk", topic: "Arco", title: "Como segurar o arco corretamente — exercícios e erros comuns" },
-];
+// Vídeo-aulas embutidas em destaque, específicas por instrumento.
+export const FEATURED_VIDEOS: Record<string, Video[]> = {
+  violin: [
+    { id: "v0lIfsKCDQs", topic: "Vibrato", title: "O jeito certo de fazer o vibrato no violino" },
+    { id: "ebDzih1xOBk", topic: "Arco", title: "Como segurar o arco corretamente — exercícios e erros comuns" },
+  ],
+  viola: [
+    { id: "TY-bRbIN5D4", topic: "Arco", title: "Empunhadura do arco — como segurar o arco da viola" },
+    { id: "8jJGz2Gl44w", topic: "Afinação (CCB)", title: "Viola de Arco CCB (Tenor) — afinação" },
+  ],
+  cello: [
+    { id: "WEDjf2rAgOU", topic: "Vibrato", title: "Técnica de vibrato no violoncelo" },
+    { id: "B60ZkHet5AA", topic: "Arco", title: "Tudo sobre o arco do violoncelo — com exercícios" },
+  ],
+};
+
+export function featuredFor(instrumentId: string): Video[] {
+  return FEATURED_VIDEOS[instrumentId] ?? FEATURED_VIDEOS.violin;
+}
 
 export interface LinkItem {
   name: string;
@@ -78,28 +92,27 @@ export const OFFICIAL: LinkItem[] = [
   },
 ];
 
-export const CHANNELS: LinkItem[] = [
-  {
-    name: "Violino Didático",
-    url: "https://www.youtube.com/user/violinodidatico",
-    note: "Maior canal de violino em português (Jean de Oliveira). Ótimo do zero, inclui vibrato.",
-  },
-  {
-    name: "Violin Hero",
-    url: "https://www.youtube.com/c/ViolinHero",
-    note: "Ney Aguiar — dicas e técnica de violino toda semana.",
-  },
-  {
-    name: "Para Violinistas",
-    url: "https://www.youtube.com/results?search_query=Para+Violinistas",
-    note: "Aulas para iniciantes, exercícios e dicas de estudo.",
-  },
-  {
-    name: "Violoncelo (canal)",
-    url: "https://www.youtube.com/c/Violoncelo/videos",
-    note: "Aulas e técnica de violoncelo em português.",
-  },
-];
+export const CHANNELS: Record<string, LinkItem[]> = {
+  violin: [
+    { name: "Violino Didático", url: "https://www.youtube.com/user/violinodidatico", note: "Maior canal de violino em português (Jean de Oliveira). Ótimo do zero, inclui vibrato." },
+    { name: "Violin Hero", url: "https://www.youtube.com/c/ViolinHero", note: "Ney Aguiar — dicas e técnica de violino toda semana." },
+    { name: "Para Violinistas", url: "https://www.youtube.com/results?search_query=Para+Violinistas", note: "Aulas para iniciantes, exercícios e dicas de estudo." },
+  ],
+  viola: [
+    { name: "Como tocar Viola de Arco", url: "https://www.youtube.com/results?search_query=como+tocar+viola+de+arco+aula+gratuita", note: "Série de aulas gratuitas de viola do zero." },
+    { name: "Viola de Arco — CCB", url: "https://www.youtube.com/results?search_query=viola+de+arco+ccb+tenor+aula", note: "Aulas voltadas ao naipe tenor da CCB." },
+    { name: "Canais de violino ajudam também", url: "https://www.youtube.com/user/violinodidatico", note: "A técnica da mão esquerda e do arco é a mesma do violino." },
+  ],
+  cello: [
+    { name: "Violoncelo (canal)", url: "https://www.youtube.com/c/Violoncelo/videos", note: "Aulas e técnica de violoncelo em português." },
+    { name: "Primeiros Passos no Violoncelo", url: "https://www.youtube.com/playlist?list=PLevSlLjIM9xo7uCddqbdPI5i_JxNpfaCt", note: "Playlist para começar o cello do zero." },
+    { name: "Cello para iniciantes", url: "https://www.youtube.com/results?search_query=cello+violoncelo+aula+iniciante", note: "Mais aulas de violoncelo para iniciantes." },
+  ],
+};
+
+export function channelsFor(instrumentId: string): LinkItem[] {
+  return CHANNELS[instrumentId] ?? CHANNELS.violin;
+}
 
 const INSTR_PT: Record<string, string> = { violin: "violino", viola: "viola", cello: "violoncelo" };
 

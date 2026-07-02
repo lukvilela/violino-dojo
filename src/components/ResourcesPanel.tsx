@@ -5,7 +5,7 @@
 
 import { useApp } from "@/lib/store";
 import { INSTRUMENTS } from "@/lib/music/instruments";
-import { CHANNELS, FEATURED_VIDEOS, OFFICIAL, TIPS, instrumentWord, youtubeSearch } from "@/lib/resources";
+import { channelsFor, featuredFor, OFFICIAL, TIPS, instrumentWord, youtubeSearch } from "@/lib/resources";
 import { VideoIcon, ExternalIcon } from "./icons";
 
 function ExtLink({ name, url, note }: { name: string; url: string; note: string }) {
@@ -24,6 +24,7 @@ export default function ResourcesPanel() {
   const { settings } = useApp();
   const instrument = INSTRUMENTS[settings.instrumentId] ?? INSTRUMENTS.violin;
   const word = instrumentWord(settings.instrumentId);
+  const videos = featuredFor(settings.instrumentId);
 
   return (
     <div className="space-y-8">
@@ -35,7 +36,7 @@ export default function ResourcesPanel() {
       <section>
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-faint">Vídeo-aulas em destaque</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {FEATURED_VIDEOS.map((v) => (
+          {videos.map((v) => (
             <div key={v.id} className="card overflow-hidden">
               <div className="aspect-video w-full bg-black">
                 <iframe
@@ -62,7 +63,7 @@ export default function ResourcesPanel() {
             </div>
           ))}
         </div>
-        <p className="mt-2 text-xs text-faint">Demonstrações no violino; os princípios valem para viola e violoncelo.</p>
+        <p className="mt-2 text-xs text-faint">Vídeo-aulas de {instrument.name.toLowerCase()}. Troque o instrumento na tela inicial para ver as do seu.</p>
       </section>
 
       <section>
@@ -98,7 +99,7 @@ export default function ResourcesPanel() {
       <section>
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-faint">Canais recomendados</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {CHANNELS.map((l) => (
+          {channelsFor(settings.instrumentId).map((l) => (
             <ExtLink key={l.url} {...l} />
           ))}
         </div>
