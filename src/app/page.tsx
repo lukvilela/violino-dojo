@@ -2,7 +2,7 @@ import Link from "next/link";
 import Hud from "@/components/Hud";
 import SettingsBar from "@/components/SettingsBar";
 import ResetButton from "@/components/ResetButton";
-import { ModeIcon, BookIcon } from "@/components/icons";
+import { ModeIcon, BookIcon, VideoIcon } from "@/components/icons";
 import { MODES } from "@/lib/modes";
 
 export default function Home() {
@@ -48,6 +48,17 @@ export default function Home() {
         <div className="flex-1">
           <div className="font-semibold text-ink">Teoria musical — 16 fases</div>
           <div className="text-sm text-muted">Trilha do som à interpretação, com lição e quiz por nível.</div>
+        </div>
+        <span className="text-faint transition group-hover:translate-x-0.5 group-hover:text-accent">→</span>
+      </Link>
+
+      <Link href="/recursos" className="card group mt-3 flex items-center gap-4 p-5 transition hover:-translate-y-0.5">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-tint text-accent">
+          <VideoIcon className="h-5 w-5" />
+        </span>
+        <div className="flex-1">
+          <div className="font-semibold text-ink">Recursos &amp; Dicas</div>
+          <div className="text-sm text-muted">Método da CCB, vídeos e técnica: postura, arco, afinação, vibrato…</div>
         </div>
         <span className="text-faint transition group-hover:translate-x-0.5 group-hover:text-accent">→</span>
       </Link>

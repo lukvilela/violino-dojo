@@ -43,8 +43,8 @@ export const StaffIcon = (p: IconProps) => (
 // orelha — "treino de ouvido"
 export const EarIcon = (p: IconProps) => (
   <Base {...p}>
-    <path d="M6.5 10a5.5 5.5 0 0 1 11 0c0 3-2.5 3.6-2.5 5.6a2.6 2.6 0 0 1-5.2 0" />
-    <path d="M9.5 10a2.5 2.5 0 0 1 5 0c0 1.3-1 1.8-1 2.8" />
+    <path d="M8.2 16.2A6 6 0 1 1 16.5 13.2c0 2.6-2.6 3.1-2.6 5.3a3 3 0 0 1-5.9.8" />
+    <path d="M14.2 10.8a2.6 2.6 0 0 0-5 .9c0 1.4 1.1 1.9 1.1 3.1" />
   </Base>
 );
 
@@ -62,9 +62,10 @@ export const IntervalIcon = (p: IconProps) => (
 // metrônomo — "ditado rítmico"
 export const MetronomeIcon = (p: IconProps) => (
   <Base {...p}>
-    <path d="M8.5 4.5h7l2 15H6.5z" />
-    <path d="M6.8 15.5h10.4" />
-    <path d="M12 18.5V9.5l3-2" />
+    <path d="M9.5 4h5l3.5 16h-13z" />
+    <path d="M7.5 15h9" />
+    <path d="M11.8 17.5 13.7 6" />
+    <circle cx="12.9" cy="11.4" r="1.15" fill="currentColor" stroke="none" />
   </Base>
 );
 
@@ -105,6 +106,22 @@ export const BackspaceIcon = (p: IconProps) => (
   <Base {...p}>
     <path d="M20 5H9.5L3 12l6.5 7H20a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z" />
     <path d="M12 9.5l5 5M17 9.5l-5 5" />
+  </Base>
+);
+
+// vídeo/aulas — "recursos"
+export const VideoIcon = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="3" y="6" width="18" height="12" rx="2.5" />
+    <path d="M11 10l3.5 2-3.5 2z" fill="currentColor" stroke="none" />
+  </Base>
+);
+
+export const ExternalIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M14 5h5v5" />
+    <path d="M19 5l-7 7" />
+    <path d="M18 13.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5" />
   </Base>
 );
 
