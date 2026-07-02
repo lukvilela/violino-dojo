@@ -13,7 +13,7 @@ import { useApp } from "@/lib/store";
 import { INSTRUMENTS, Cell, cellKey } from "@/lib/music/instruments";
 import { levelById, levelPool } from "@/lib/music/curriculum";
 import { pickNext } from "@/lib/music/srs";
-import { shortName } from "@/lib/music/notes";
+import { shortName, pitchClass } from "@/lib/music/notes";
 import { playNote, playArpeggio } from "@/lib/audio/player";
 import SampleBanner from "./SampleBanner";
 import { Mode } from "@/lib/modes";
@@ -70,13 +70,16 @@ export default function TrainerGame({ mode }: { mode: Mode }) {
 
   const handlePick = (cell: Cell) => {
     if (!target || feedback) return;
-    const ok = cell.midi === target.midi;
+    // No modo "achar", o nome não traz oitava — então qualquer oitava da nota vale
+    // (ex.: Ré na corda solta ou no 3º dedo da corda Lá). Nos demais modos a
+    // oitava é conhecida (pauta/som), então exigimos a nota exata.
+    const ok = mode.id === "find" ? pitchClass(cell.midi) === pitchClass(target.midi) : cell.midi === target.midi;
     const newStreak = ok ? streak + 1 : 0;
     setStreak(newStreak);
     recordResult(target, ok, newStreak);
     setFeedback({ status: ok ? "correct" : "wrong", selectedKey: cellKey(cell), revealKey: ok ? null : cellKey(target) });
     if (ok) {
-      playArpeggio(settings.instrumentId, target.midi);
+      playArpeggio(settings.instrumentId, cell.midi);
       advance(850, cellKey(target));
     } else {
       playNote(settings.instrumentId, target.midi, 1.1);
