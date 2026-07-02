@@ -82,9 +82,12 @@ export default function Fingerboard({
       {/* casas cromáticas */}
       {cells.map((c) => {
         const key = cellKey(c);
+        const inPool = !poolKeys || poolKeys.has(key);
+        // No treino só mostramos as casas clicáveis (as de fora do nível somem, em vez
+        // de ficarem apagadas do lado — o que confundia). No Explorar aparecem todas.
+        if (!inPool) return null;
         const cx = stringX(c.stringIndex);
         const cy = semiY(c.semitone);
-        const inPool = !poolKeys || poolKeys.has(key);
         const isSel = selectedKey === key;
         const isReveal = revealKey === key && status === "wrong";
         const acc = isAccidental(c.midi);
@@ -110,14 +113,14 @@ export default function Fingerboard({
         return (
           <motion.g
             key={key}
-            onClick={() => !disabled && inPool && onPick?.(c)}
-            style={{ cursor: disabled || !inPool ? "default" : "pointer" }}
-            whileHover={disabled || !inPool ? undefined : { scale: 1.14 }}
+            onClick={() => !disabled && onPick?.(c)}
+            style={{ cursor: disabled ? "default" : "pointer" }}
+            whileHover={disabled ? undefined : { scale: 1.14 }}
             animate={isSel || isReveal ? { scale: [1, 1.25, 1] } : { scale: 1 }}
             transition={{ duration: 0.35 }}
           >
-            <circle cx={cx} cy={cy} r={r} fill={fill} stroke={stroke} strokeWidth={isSel || isReveal ? 3 : 1.5} opacity={inPool ? 1 : 0.35} />
-            <text x={cx} y={cy + (showNames ? 4 : 5)} textAnchor="middle" fontSize={showNames ? 11 : 13} fontWeight={700} fill={textFill} opacity={inPool ? 1 : 0.5}>
+            <circle cx={cx} cy={cy} r={r} fill={fill} stroke={stroke} strokeWidth={isSel || isReveal ? 3 : 1.5} />
+            <text x={cx} y={cy + (showNames ? 4 : 5)} textAnchor="middle" fontSize={showNames ? 11 : 13} fontWeight={700} fill={textFill}>
               {label}
             </text>
           </motion.g>
