@@ -1,116 +1,155 @@
-// Motor data-driven de instrumentos. Um instrumento é apenas cordas + posições + clave.
-// Adicionar viola/cello/violão depois é só acrescentar um objeto aqui.
+// Motor data-driven de instrumentos. Um instrumento é cordas + posições + clave.
+// O braço é CROMÁTICO: cada posição lista as notas por semitom (offset da corda solta)
+// com o dedo correspondente — inclui naturais E alteradas (Fá natural, Mi♭, etc.).
 
 export type Clef = "treble" | "alto" | "bass";
 
 export interface StringDef {
-  /** Nome da corda no idioma do instrumento (ex.: "Sol"). */
-  name: string;
-  /** MIDI da corda solta. */
-  midi: number;
+  name: string; // nome da corda solta (ex.: "Sol")
+  midi: number; // MIDI da corda solta
+}
+
+/** Uma nota da posição: offset em semitons da corda solta + dedo usado. */
+export interface FingerNote {
+  semitone: number;
+  finger: number; // 0 = corda solta
 }
 
 export interface Position {
   id: string;
   label: string;
-  /** Offset em semitons a partir da corda solta para os dedos [0(solta),1,2,3,4]. */
-  offsets: number[];
+  notes: FingerNote[];
 }
 
 export interface Instrument {
   id: string;
   name: string;
-  /** Cordas da mais grave para a mais aguda. */
-  strings: StringDef[];
+  strings: StringDef[]; // da mais grave para a mais aguda
   positions: Position[];
   clef: Clef;
-  /** Faixa de afinação aceita no modo microfone (semitons de tolerância p/ octave-jump). */
 }
 
-/** Uma "casa" tocável: cruzamento de corda + dedo em uma posição. */
+/** Uma casa tocável: cruzamento de corda + semitom em uma posição. */
 export interface Cell {
   stringIndex: number;
-  finger: number; // 0 = corda solta
+  semitone: number;
+  finger: number;
   positionId: string;
   midi: number;
 }
+
+// Padrão cromático da 1ª posição do violino/viola (afinação em quintas):
+// dedos 1,2,3 têm versão baixa e alta (meio-tom e tom); 4º dedo = quinta justa.
+const VIOLIN_POS1: FingerNote[] = [
+  { semitone: 0, finger: 0 },
+  { semitone: 1, finger: 1 },
+  { semitone: 2, finger: 1 },
+  { semitone: 3, finger: 2 },
+  { semitone: 4, finger: 2 },
+  { semitone: 5, finger: 3 },
+  { semitone: 6, finger: 3 },
+  { semitone: 7, finger: 4 },
+];
+const VIOLIN_POS3: FingerNote[] = [
+  { semitone: 0, finger: 0 },
+  { semitone: 5, finger: 1 },
+  { semitone: 6, finger: 1 },
+  { semitone: 7, finger: 2 },
+  { semitone: 8, finger: 2 },
+  { semitone: 9, finger: 3 },
+  { semitone: 10, finger: 3 },
+  { semitone: 12, finger: 4 },
+];
 
 export const VIOLIN: Instrument = {
   id: "violin",
   name: "Violino",
   clef: "treble",
   strings: [
-    { name: "Sol", midi: 55 }, // G3
-    { name: "Ré", midi: 62 }, // D4
-    { name: "Lá", midi: 69 }, // A4
-    { name: "Mi", midi: 76 }, // E5
+    { name: "Sol", midi: 55 },
+    { name: "Ré", midi: 62 },
+    { name: "Lá", midi: 69 },
+    { name: "Mi", midi: 76 },
   ],
   positions: [
-    // Padrão "2 alto" (escala maior) — mesmo formato de mão em todas as cordas.
-    { id: "pos1", label: "1ª posição", offsets: [0, 2, 4, 5, 7] },
-    // 3ª posição: 1º dedo a uma quarta justa da solta.
-    { id: "pos3", label: "3ª posição", offsets: [0, 5, 7, 9, 10] },
+    { id: "pos1", label: "1ª posição", notes: VIOLIN_POS1 },
+    { id: "pos3", label: "3ª posição", notes: VIOLIN_POS3 },
   ],
 };
 
-// Viola: mesma técnica do violino (afinação em quintas), uma quinta abaixo. Clave de dó.
 export const VIOLA: Instrument = {
   id: "viola",
   name: "Viola de arco",
   clef: "alto",
   strings: [
-    { name: "Dó", midi: 48 }, // C3
-    { name: "Sol", midi: 55 }, // G3
-    { name: "Ré", midi: 62 }, // D4
-    { name: "Lá", midi: 69 }, // A4
+    { name: "Dó", midi: 48 },
+    { name: "Sol", midi: 55 },
+    { name: "Ré", midi: 62 },
+    { name: "Lá", midi: 69 },
   ],
   positions: [
-    { id: "pos1", label: "1ª posição", offsets: [0, 2, 4, 5, 7] },
-    { id: "pos3", label: "3ª posição", offsets: [0, 5, 7, 9, 10] },
+    { id: "pos1", label: "1ª posição", notes: VIOLIN_POS1 },
+    { id: "pos3", label: "3ª posição", notes: VIOLIN_POS3 },
   ],
 };
 
-// Cello: quadro de mão diferente na 1ª posição (tom até o 1º dedo, depois meios-tons).
+// Cello: 1ª posição cobre uma quarta justa; 1º dedo tem versão recuada (meio-tom).
+const CELLO_POS1: FingerNote[] = [
+  { semitone: 0, finger: 0 },
+  { semitone: 1, finger: 1 },
+  { semitone: 2, finger: 1 },
+  { semitone: 3, finger: 2 },
+  { semitone: 4, finger: 3 },
+  { semitone: 5, finger: 4 },
+];
+const CELLO_POS_HIGH: FingerNote[] = [
+  { semitone: 0, finger: 0 },
+  { semitone: 5, finger: 1 },
+  { semitone: 6, finger: 1 },
+  { semitone: 7, finger: 2 },
+  { semitone: 8, finger: 3 },
+  { semitone: 9, finger: 4 },
+];
+
 export const CELLO: Instrument = {
   id: "cello",
   name: "Violoncelo",
   clef: "bass",
   strings: [
-    { name: "Dó", midi: 36 }, // C2
-    { name: "Sol", midi: 43 }, // G2
-    { name: "Ré", midi: 50 }, // D3
-    { name: "Lá", midi: 57 }, // A3
+    { name: "Dó", midi: 36 },
+    { name: "Sol", midi: 43 },
+    { name: "Ré", midi: 50 },
+    { name: "Lá", midi: 57 },
   ],
   positions: [
-    { id: "pos1", label: "1ª posição", offsets: [0, 2, 3, 4, 5] },
-    { id: "pos3", label: "posição alta", offsets: [0, 5, 7, 8, 9] },
+    { id: "pos1", label: "1ª posição", notes: CELLO_POS1 },
+    { id: "pos3", label: "posição alta", notes: CELLO_POS_HIGH },
   ],
 };
 
-export const INSTRUMENTS: Record<string, Instrument> = {
-  violin: VIOLIN,
-  viola: VIOLA,
-  cello: CELLO,
-};
-
+export const INSTRUMENTS: Record<string, Instrument> = { violin: VIOLIN, viola: VIOLA, cello: CELLO };
 export const INSTRUMENT_LIST: Instrument[] = [VIOLIN, VIOLA, CELLO];
 
 export function getPosition(inst: Instrument, positionId: string): Position {
   return inst.positions.find((p) => p.id === positionId) ?? inst.positions[0];
 }
 
-/** Gera todas as casas tocáveis de uma posição. */
 export function cellsForPosition(inst: Instrument, positionId: string): Cell[] {
   const pos = getPosition(inst, positionId);
   const cells: Cell[] = [];
   inst.strings.forEach((s, stringIndex) => {
-    pos.offsets.forEach((off, finger) => {
-      cells.push({ stringIndex, finger, positionId, midi: s.midi + off });
+    pos.notes.forEach((n) => {
+      cells.push({ stringIndex, semitone: n.semitone, finger: n.finger, positionId, midi: s.midi + n.semitone });
     });
   });
   return cells;
 }
 
-export function cellKey(c: { stringIndex: number; finger: number; positionId: string }): string {
-  return `${c.positionId}:${c.stringIndex}:${c.finger}`;
+/** Maior semitom da posição — usado para espaçar as casas no braço. */
+export function maxSemitone(inst: Instrument, positionId: string): number {
+  return Math.max(...getPosition(inst, positionId).notes.map((n) => n.semitone));
+}
+
+export function cellKey(c: { stringIndex: number; semitone: number; positionId: string }): string {
+  return `${c.positionId}:${c.stringIndex}:${c.semitone}`;
 }

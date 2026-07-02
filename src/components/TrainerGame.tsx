@@ -13,7 +13,7 @@ import { useApp } from "@/lib/store";
 import { INSTRUMENTS, Cell, cellKey } from "@/lib/music/instruments";
 import { levelById, levelPool } from "@/lib/music/curriculum";
 import { pickNext } from "@/lib/music/srs";
-import { shortName, pitchClass } from "@/lib/music/notes";
+import { shortName, pitchClass, promptName } from "@/lib/music/notes";
 import { playNote, playArpeggio } from "@/lib/audio/player";
 import SampleBanner from "./SampleBanner";
 import { SpeakerIcon } from "./icons";
@@ -100,7 +100,7 @@ export default function TrainerGame({ mode }: { mode: Mode }) {
 
   if (!ready || !target) return <div className="py-24 text-center text-faint">carregando…</div>;
 
-  const targetName = shortName(target.midi, settings.naming);
+  const targetName = mode.id === "find" ? promptName(target.midi, settings.naming) : shortName(target.midi, settings.naming);
   const isMic = mode.id === "tocar";
 
   return (
@@ -167,7 +167,7 @@ export default function TrainerGame({ mode }: { mode: Mode }) {
           instrument={instrument}
           positionId={level.positionId}
           naming={settings.naming}
-          showNames={settings.showNames || feedback?.status === "wrong"}
+          showNames={false}
           poolKeys={poolKeys}
           onPick={handlePick}
           selectedKey={feedback?.selectedKey}

@@ -1,48 +1,47 @@
-// Progressão inspirada no Suzuki/Sassmannshaus: começa em poucas cordas/dedos e expande.
-// Cada nível define quais casas entram no "pool" de perguntas.
+// Progressão: primeiro só notas naturais (sem sustenidos/bemóis) nas cordas do meio,
+// depois todas as cordas, depois entram as alteradas, e por fim a posição alta.
 
 import { Cell, cellsForPosition, Instrument } from "./instruments";
+import { isAccidental } from "./notes";
 
 export interface Level {
   id: string;
   name: string;
   hint: string;
-  /** Filtro sobre as casas do instrumento. */
   filter: (c: Cell) => boolean;
   positionId: string;
   xpToUnlock: number;
 }
 
-// Índices de corda no violino: 0=Sol 1=Ré 2=Lá 3=Mi
 export const LEVELS: Level[] = [
   {
     id: "iniciante",
-    name: "Primeiros passos",
-    hint: "As duas cordas do meio, dedos 0 a 3 — o começo do método Suzuki.",
+    name: "Naturais (cordas do meio)",
+    hint: "Só notas naturais nas duas cordas do meio — sem sustenidos nem bemóis.",
     positionId: "pos1",
-    filter: (c) => (c.stringIndex === 1 || c.stringIndex === 2) && c.finger <= 3,
+    filter: (c) => (c.stringIndex === 1 || c.stringIndex === 2) && !isAccidental(c.midi),
     xpToUnlock: 0,
   },
   {
     id: "quatro-cordas",
-    name: "Todas as cordas",
-    hint: "As 4 cordas, dedos 0 a 3 — incluindo as extremas.",
+    name: "Naturais (todas as cordas)",
+    hint: "Todas as notas naturais da 1ª posição, nas 4 cordas.",
     positionId: "pos1",
-    filter: (c) => c.finger <= 3,
+    filter: (c) => !isAccidental(c.midi),
     xpToUnlock: 150,
   },
   {
-    id: "pinky",
-    name: "Entra o 4º dedo",
-    hint: "Todas as cordas com o mindinho (4º dedo).",
+    id: "acidentes",
+    name: "Com sustenidos e bemóis",
+    hint: "Agora entram as alteradas: diferencie Fá de Fá♯, Mi de Mi♭, etc.",
     positionId: "pos1",
     filter: () => true,
     xpToUnlock: 400,
   },
   {
-    id: "terceira",
+    id: "posicao-alta",
     name: "Posição alta",
-    hint: "Sobe a mão pra região mais aguda (3ª posição no violino/viola).",
+    hint: "Sobe a mão para a região mais aguda (3ª posição no violino/viola).",
     positionId: "pos3",
     filter: (c) => c.finger >= 1,
     xpToUnlock: 800,

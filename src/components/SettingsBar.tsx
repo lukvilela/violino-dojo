@@ -43,11 +43,6 @@ export default function SettingsBar() {
           </button>
         ))}
       </div>
-
-      <label className="flex cursor-pointer items-center gap-2 text-muted">
-        <input type="checkbox" checked={settings.showNames} onChange={(e) => setSetting("showNames", e.target.checked)} className="accent-accent" />
-        Mostrar nomes no braço
-      </label>
     </div>
   );
 }
