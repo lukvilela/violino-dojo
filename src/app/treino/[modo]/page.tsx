@@ -4,6 +4,7 @@ import TrainerGame from "@/components/TrainerGame";
 import ExploreBoard from "@/components/ExploreBoard";
 import IntervalTrainer from "@/components/IntervalTrainer";
 import RhythmDictation from "@/components/RhythmDictation";
+import { ModeIcon } from "@/components/icons";
 import { MODES, modeById } from "@/lib/modes";
 
 export function generateStaticParams() {
@@ -23,7 +24,9 @@ export default async function TreinoPage({ params }: { params: Promise<{ modo: s
         </Link>
       </div>
       <header className="mb-7 text-center">
-        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-tint text-2xl">{mode.icon}</div>
+        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-tint text-accent">
+          <ModeIcon id={mode.id} className="h-6 w-6" />
+        </div>
         <h1 className="font-display text-3xl text-ink">{mode.name}</h1>
         <p className="mx-auto mt-1 max-w-md text-sm text-muted">{mode.desc}</p>
       </header>

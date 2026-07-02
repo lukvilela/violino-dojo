@@ -2,6 +2,7 @@ import Link from "next/link";
 import Hud from "@/components/Hud";
 import SettingsBar from "@/components/SettingsBar";
 import ResetButton from "@/components/ResetButton";
+import { ModeIcon, BookIcon } from "@/components/icons";
 import { MODES } from "@/lib/modes";
 
 export default function Home() {
@@ -27,7 +28,9 @@ export default function Home() {
       <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {MODES.map((m) => (
           <Link key={m.id} href={`/treino/${m.id}`} className="card group relative flex items-start gap-4 p-4 transition hover:-translate-y-0.5">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-tint text-xl">{m.icon}</span>
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-tint text-accent">
+              <ModeIcon id={m.id} className="h-5 w-5" />
+            </span>
             <div className="min-w-0">
               <div className="font-semibold text-ink">{m.name}</div>
               <div className="text-sm leading-snug text-muted">{m.short}</div>
@@ -39,7 +42,9 @@ export default function Home() {
 
       <h2 className="mb-3 mt-8 text-xs font-semibold uppercase tracking-[0.14em] text-faint">Estudar</h2>
       <Link href="/teoria" className="card group flex items-center gap-4 p-5 transition hover:-translate-y-0.5">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-tint text-xl">📖</span>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-tint text-accent">
+          <BookIcon className="h-5 w-5" />
+        </span>
         <div className="flex-1">
           <div className="font-semibold text-ink">Teoria musical — 16 fases</div>
           <div className="text-sm text-muted">Trilha do som à interpretação, com lição e quiz por nível.</div>

@@ -16,6 +16,7 @@ import { pickNext } from "@/lib/music/srs";
 import { shortName, pitchClass } from "@/lib/music/notes";
 import { playNote, playArpeggio } from "@/lib/audio/player";
 import SampleBanner from "./SampleBanner";
+import { SpeakerIcon } from "./icons";
 import { Mode } from "@/lib/modes";
 
 interface Feedback {
@@ -133,8 +134,8 @@ export default function TrainerGame({ mode }: { mode: Mode }) {
             )}
 
             {mode.id === "ouvido" && (
-              <button onClick={() => playNote(settings.instrumentId, target.midi)} className="card px-8 py-6 text-2xl text-ink transition hover:border-accent">
-                🔊 Ouvir de novo
+              <button onClick={() => playNote(settings.instrumentId, target.midi)} className="card flex items-center gap-3 px-8 py-6 text-xl text-ink transition hover:border-accent">
+                <SpeakerIcon className="h-7 w-7 text-accent" /> Ouvir de novo
               </button>
             )}
 
@@ -144,7 +145,7 @@ export default function TrainerGame({ mode }: { mode: Mode }) {
                   Toque <span className="font-semibold text-ink">{targetName}</span>
                 </p>
                 <button onClick={() => playNote(settings.instrumentId, target.midi)} className="btn px-4 py-1.5 text-sm">
-                  🔊 ouvir como é
+                  <SpeakerIcon className="h-4 w-4" /> ouvir como é
                 </button>
               </div>
             )}

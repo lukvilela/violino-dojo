@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import SampleBanner from "./SampleBanner";
+import { SpeakerIcon } from "./icons";
 import { useApp } from "@/lib/store";
 import { INSTRUMENTS } from "@/lib/music/instruments";
 import { midiToName } from "@/lib/music/notes";
@@ -120,8 +121,8 @@ export default function IntervalTrainer() {
         Sequência <span className="font-semibold text-accent">{streak}</span>
       </span>
 
-      <button onClick={() => play(target, root, dir)} className="card px-10 py-7 text-3xl text-ink transition hover:border-accent">
-        🔊 Ouvir o intervalo
+      <button onClick={() => play(target, root, dir)} className="card flex items-center gap-3 px-10 py-7 text-2xl text-ink transition hover:border-accent">
+        <SpeakerIcon className="h-8 w-8 text-accent" /> Ouvir o intervalo
       </button>
 
       <div className="grid w-full max-w-md grid-cols-2 gap-2 sm:grid-cols-3">

@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Renderer, Stave, StaveNote, Beam, Voice, Formatter } from "vexflow";
 import SampleBanner from "./SampleBanner";
+import { SpeakerIcon, BackspaceIcon } from "./icons";
 import { useApp } from "@/lib/store";
 import { INSTRUMENTS } from "@/lib/music/instruments";
 import { playNote } from "@/lib/audio/player";
@@ -140,8 +141,8 @@ export default function RhythmDictation() {
         </span>
       </div>
 
-      <button onClick={() => play(target)} className="card px-8 py-6 text-xl text-ink transition hover:border-accent">
-        🔊 Ouvir o ritmo
+      <button onClick={() => play(target)} className="card flex items-center gap-3 px-8 py-6 text-xl text-ink transition hover:border-accent">
+        <SpeakerIcon className="h-7 w-7 text-accent" /> Ouvir o ritmo
       </button>
 
       {/* montagem do compasso — 4 tempos */}
@@ -176,7 +177,7 @@ export default function RhythmDictation() {
           </div>
           <div className="flex gap-2">
             <button onClick={() => setAnswer((a) => a.slice(0, -1))} className="btn px-3 py-1.5 text-sm" disabled={!answer.length}>
-              ⌫ apagar
+              <BackspaceIcon className="h-4 w-4" /> apagar
             </button>
             <button onClick={() => setAnswer([])} className="btn px-3 py-1.5 text-sm" disabled={!answer.length}>
               limpar

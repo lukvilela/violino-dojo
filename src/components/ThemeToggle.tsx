@@ -4,6 +4,7 @@
 // O flash inicial é evitado por um script inline no layout (roda antes da pintura).
 
 import { useEffect, useState } from "react";
+import { SunIcon, MoonIcon } from "./icons";
 
 export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
@@ -25,9 +26,9 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label={dark ? "Ativar tema claro" : "Ativar tema escuro"}
-      className="fixed right-4 top-4 z-50 flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-base shadow-sm transition hover:border-faint"
+      className="fixed right-4 top-4 z-50 flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-ink shadow-sm transition hover:border-faint"
     >
-      {dark ? "☀️" : "🌙"}
+      {dark ? <SunIcon className="h-[18px] w-[18px]" /> : <MoonIcon className="h-[18px] w-[18px]" />}
     </button>
   );
 }

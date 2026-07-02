@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Fingerboard from "./Fingerboard";
 import SampleBanner from "./SampleBanner";
+import { PlayIcon } from "./icons";
 import { useApp } from "@/lib/store";
 import { INSTRUMENTS, Cell, cellKey, getPosition } from "@/lib/music/instruments";
 import { midiToName } from "@/lib/music/notes";
@@ -49,7 +50,7 @@ export default function ExploreBoard() {
           ))}
         </div>
         <button onClick={playOpenStrings} className="btn px-3 py-1.5 text-sm">
-          ▶ Cordas soltas
+          <PlayIcon className="h-3.5 w-3.5" /> Cordas soltas
         </button>
       </div>
 
