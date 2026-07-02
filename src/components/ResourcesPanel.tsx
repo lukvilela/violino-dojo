@@ -5,7 +5,7 @@
 
 import { useApp } from "@/lib/store";
 import { INSTRUMENTS } from "@/lib/music/instruments";
-import { CHANNELS, OFFICIAL, TIPS, instrumentWord, youtubeSearch } from "@/lib/resources";
+import { CHANNELS, FEATURED_VIDEOS, OFFICIAL, TIPS, instrumentWord, youtubeSearch } from "@/lib/resources";
 import { VideoIcon, ExternalIcon } from "./icons";
 
 function ExtLink({ name, url, note }: { name: string; url: string; note: string }) {
@@ -31,6 +31,39 @@ export default function ResourcesPanel() {
         Mostrando dicas para <span className="font-semibold">{instrument.name}</span>. Troque o instrumento na tela inicial
         e os vídeos se ajustam.
       </div>
+
+      <section>
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-faint">Vídeo-aulas em destaque</h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {FEATURED_VIDEOS.map((v) => (
+            <div key={v.id} className="card overflow-hidden">
+              <div className="aspect-video w-full bg-black">
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${v.id}`}
+                  title={v.title}
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-accent">{v.topic}</div>
+                <div className="mt-0.5 text-sm text-ink">{v.title}</div>
+                <a
+                  href={`https://www.youtube.com/watch?v=${v.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1.5 inline-flex items-center gap-1 text-xs text-muted hover:text-accent"
+                >
+                  <ExternalIcon className="h-3.5 w-3.5" /> abrir no YouTube
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-faint">Demonstrações no violino; os princípios valem para viola e violoncelo.</p>
+      </section>
 
       <section>
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-faint">Método oficial da CCB</h2>

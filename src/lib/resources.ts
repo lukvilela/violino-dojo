@@ -47,6 +47,18 @@ export const TIPS: Tip[] = [
   },
 ];
 
+export interface Video {
+  id: string;
+  topic: string;
+  title: string;
+}
+
+// Vídeo-aulas embutidas em destaque (demonstração no violino; princípios valem p/ viola/cello).
+export const FEATURED_VIDEOS: Video[] = [
+  { id: "v0lIfsKCDQs", topic: "Vibrato", title: "O jeito certo de fazer o vibrato no violino" },
+  { id: "ebDzih1xOBk", topic: "Arco", title: "Como segurar o arco corretamente — exercícios e erros comuns" },
+];
+
 export interface LinkItem {
   name: string;
   url: string;
