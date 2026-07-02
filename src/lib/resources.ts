@@ -59,18 +59,21 @@ export const FEATURED_VIDEOS: Record<string, Video[]> = {
     { id: "uU-mmYqomFU", topic: "Postura", title: "Como segurar o violino corretamente" },
     { id: "2omKx30Ve08", topic: "Afinação", title: "Como afinar o violino, passo a passo" },
     { id: "ebDzih1xOBk", topic: "Arco", title: "Como segurar o arco corretamente — exercícios e erros comuns" },
+    { id: "XdSni7ked70", topic: "Mudança de posição", title: "Mudança de posição no violino — como fazer e nota de passagem" },
     { id: "v0lIfsKCDQs", topic: "Vibrato", title: "O jeito certo de fazer o vibrato no violino" },
   ],
   viola: [
     { id: "o7wZ2jUBBik", topic: "Postura", title: "Viola de arco — postura e como segurar (aula 2)" },
     { id: "8jJGz2Gl44w", topic: "Afinação (CCB)", title: "Viola de Arco CCB (Tenor) — afinação" },
     { id: "TY-bRbIN5D4", topic: "Arco", title: "Empunhadura do arco — como segurar o arco da viola" },
+    { id: "VY_-h369t1E", topic: "Mudança de posição", title: "Viola de arco — mudança de posição (resumo)" },
     { id: "ZVYVO1EJFhM", topic: "Vibrato (inglês)", title: "Viola vibrato — tutorial e exercícios (em inglês)" },
   ],
   cello: [
     { id: "AoG0Ec3r0fA", topic: "Postura", title: "Violoncelo do zero — postura e primeiros passos" },
     { id: "niwr8dZhQTY", topic: "Afinação", title: "Como afinar o violoncelo (para iniciantes)" },
     { id: "B60ZkHet5AA", topic: "Arco", title: "Tudo sobre o arco do violoncelo — com exercícios" },
+    { id: "TCSEHBoBAw8", topic: "Mudança de posição", title: "Extensão e mudança de posição no violoncelo" },
     { id: "WEDjf2rAgOU", topic: "Vibrato", title: "Técnica de vibrato no violoncelo" },
   ],
 };
