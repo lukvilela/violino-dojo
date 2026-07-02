@@ -4,7 +4,7 @@
 // YouTube (adaptado ao instrumento selecionado) e canais recomendados.
 
 import { useApp } from "@/lib/store";
-import { INSTRUMENTS } from "@/lib/music/instruments";
+import { INSTRUMENTS, INSTRUMENT_LIST } from "@/lib/music/instruments";
 import { channelsFor, featuredFor, OFFICIAL, TIPS, instrumentWord, youtubeSearch } from "@/lib/resources";
 import { VideoIcon, ExternalIcon } from "./icons";
 
@@ -21,16 +21,26 @@ function ExtLink({ name, url, note }: { name: string; url: string; note: string 
 }
 
 export default function ResourcesPanel() {
-  const { settings } = useApp();
+  const { settings, setSetting } = useApp();
   const instrument = INSTRUMENTS[settings.instrumentId] ?? INSTRUMENTS.violin;
   const word = instrumentWord(settings.instrumentId);
   const videos = featuredFor(settings.instrumentId);
 
   return (
     <div className="space-y-8">
-      <div className="rounded-xl bg-accent-tint px-4 py-2 text-sm text-accent-ink">
-        Mostrando dicas para <span className="font-semibold">{instrument.name}</span>. Troque o instrumento na tela inicial
-        e os vídeos se ajustam.
+      <div className="flex flex-wrap items-center gap-3 rounded-xl bg-accent-tint px-4 py-3">
+        <span className="text-sm text-accent-ink">Vídeos e dicas para</span>
+        <div className="inline-flex overflow-hidden rounded-lg border border-line bg-surface">
+          {INSTRUMENT_LIST.map((inst) => (
+            <button
+              key={inst.id}
+              onClick={() => setSetting("instrumentId", inst.id)}
+              className={`seg ${settings.instrumentId === inst.id ? "seg-on" : ""}`}
+            >
+              {inst.name}
+            </button>
+          ))}
+        </div>
       </div>
 
       <section>
